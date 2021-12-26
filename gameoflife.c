@@ -150,9 +150,9 @@ void world_load(FILE* savefile) {
 		die("file does not exist");
 	}
 
-	uint32_t version;
-	uint32_t x;
-	uint32_t y;
+	int32_t version;
+	int32_t x;
+	int32_t y;
 
 	if (fscanf(savefile, "cgol-version: %d\n", &version) == 0) {
 		die("version field not found");
