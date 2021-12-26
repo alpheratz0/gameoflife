@@ -24,7 +24,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <ctype.h>
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 #include "frame.h"
 #include "keyconfig.h"

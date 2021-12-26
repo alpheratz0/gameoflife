@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include "frame.h"
 
 int frame_start = 0;
