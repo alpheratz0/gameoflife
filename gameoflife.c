@@ -272,7 +272,7 @@ void reshape(int w, int h) {
 
 void mouse(int button, int mstate, int x, int y) {
 	if (paused && button == GLUT_LEFT_BUTTON && mstate == GLUT_DOWN) {
-		cells[(y/cellsize) * columns + (x/cellsize)] ^= 1;
+		toggle_cell((x/cellsize), (y/cellsize));
 		glutPostRedisplay();
 	}
 }
