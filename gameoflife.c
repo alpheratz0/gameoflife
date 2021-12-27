@@ -130,6 +130,11 @@ void world_save(void) {
 	strftime(filename, 21, "%Y%m%d%H%M%S.cgol", tm_info);
 
 	FILE *savefile = fopen(filename, "w");
+
+	if (savefile == NULL) {
+		savefile = fopen("/dev/stdout", "w");
+	}
+
 	fprintf(savefile, "cgol-version: %d\n", CGOL_VERSION);
 	fprintf(savefile, "columns: %d\n", columns);
 	fprintf(savefile, "rows: %d\n", rows);
