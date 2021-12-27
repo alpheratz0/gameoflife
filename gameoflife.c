@@ -43,7 +43,7 @@ static int32_t columns = 300;
 static int32_t width = 640;
 static int32_t height = 480;
 
-void showhelp(void) {
+void usage(void) {
 	printf("Usage: gameoflife [ -hG ] FILENAME\n");
 	printf("Options are:\n");
 	printf("     -G | --no-grid                 hide the grid\n");
@@ -333,7 +333,7 @@ void process_args(int argc, char** argv) {
 			showgrid = false;
 		}
 		else if (MATCH_OPT(argv[i], "-h", "--help")) {
-			showhelp();
+			usage();
 			exit(0);
 		}
 		else if (MATCH_OPT(argv[i], "-r", "--reversed-controls")) {
