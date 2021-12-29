@@ -233,8 +233,8 @@ void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(0.188, 0.639, 0.956);
 
-	for (int32_t x = 0; x < width / cellsize; ++x) {
-		for (int32_t y = 0; y < height / cellsize; ++y) {
+	for (int32_t x = 0; x <= width / cellsize; ++x) {
+		for (int32_t y = 0; y <= height / cellsize; ++y) {
 			if (get_cell(x, y) == 1) {
 				glRectf(x * cellsize, y * cellsize, (x + 1) * cellsize, (y + 1) * cellsize);
 			}
