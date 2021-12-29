@@ -43,6 +43,11 @@ static int32_t columns = 300;
 static int32_t width = 640;
 static int32_t height = 480;
 
+/* offset from start position */
+static char offsetstr[30];
+static int32_t start_xoffset = 0;
+static int32_t start_yoffset = 0;
+
 void usage(void) {
 	printf("Usage: gameoflife [ -hG ] FILENAME\n");
 	printf("Options are:\n");
@@ -201,6 +206,9 @@ void move(int32_t xoffset, int32_t yoffset) {
 		}
 	}
 
+	start_xoffset = (start_xoffset + xoffset) % columns;
+	start_yoffset = (start_yoffset + yoffset) % rows;
+
 	free(temp_cells);
 }
 
@@ -258,6 +266,11 @@ void display(void) {
 			glEnd();
 		}
 	}
+
+	sprintf(offsetstr, "(%d, %d)", -start_xoffset, start_yoffset);
+	glColor4f(0.94117, 0.96862, 0.16470, 1.0);
+	glRasterPos2f(10, height - 10);
+	glutBitmapString((void*)(GLUT_BITMAP_HELVETICA_12), (unsigned char*)(offsetstr));
 
 	glutSwapBuffers();
 }
