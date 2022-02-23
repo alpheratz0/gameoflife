@@ -1,6 +1,6 @@
 gameoflife
 ==========
-conway's game of life using freeglut 
+conway's game of life implemented in the c programming language using freeglut
 
 build
 =====
