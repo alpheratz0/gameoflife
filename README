@@ -1,0 +1,11 @@
+gameoflife
+==========
+conway's game of life using freeglut 
+
+build
+=====
+$ make
+
+install
+=======
+$ sudo make install
