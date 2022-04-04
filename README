@@ -4,6 +4,7 @@ conway's game of life implemented in the c programming language using freeglut
 
 build
 =====
+you will need freeglut headers to build this program
 $ make
 
 install
