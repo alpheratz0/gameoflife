@@ -1,5 +1,5 @@
-#ifndef FRAME_H
-#define FRAME_H 1
+#ifndef __GAMEOFLIFE_FRAME_H__
+#define __GAMEOFLIFE_FRAME_H__
 
 void set_frame_start();
 void set_frame_rate(int fps);

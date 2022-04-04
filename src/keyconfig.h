@@ -1,5 +1,5 @@
-#ifndef KEYCONFIG_H
-#define KEYCONFIG_H
+#ifndef __GAMEOFLIFE_KEYCONFIG_H__
+#define __GAMEOFLIFE_KEYCONFIG_H__
 
 #define KEY_PAUSE 		' '
 #define KEY_NEXT 		'n'
