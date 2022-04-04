@@ -6,12 +6,15 @@ CFLAGS = -std=c99 -pedantic -Wall -Os ${INCS}
 LDFLAGS = -s ${LIBS}
 CC = cc
 
-SRC = frame.c gameoflife.c
+SRC = src/frame.c \
+	  src/gameoflife.c
+
 OBJ = ${SRC:.c=.o}
 
 all: gameoflife
 
-${OBJ}: frame.h keyconfig.h
+${OBJ}: src/frame.h \
+		src/keyconfig.h
 
 gameoflife: ${OBJ}
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
@@ -24,7 +27,7 @@ install: all
 	@cp -f gameoflife ${DESTDIR}${PREFIX}/bin
 	@chmod 755 ${DESTDIR}${PREFIX}/bin/gameoflife
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man6
-	@cp -f gameoflife.6 ${DESTDIR}${MANPREFIX}/man6/gameoflife.6
+	@cp -f man/gameoflife.6 ${DESTDIR}${MANPREFIX}/man6/gameoflife.6
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man6/gameoflife.6
 
 uninstall:
