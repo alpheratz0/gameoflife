@@ -48,7 +48,8 @@ static char offsetstr[30];
 static int32_t pointer_xoffset = 0;
 static int32_t pointer_yoffset = 0;
 
-void usage(void) {
+static void
+usage(void) {
 	printf("Usage: gameoflife [ -hG ] FILENAME\n");
 	printf("Options are:\n");
 	printf("     -G | --no-grid                 hide the grid\n");
@@ -56,35 +57,41 @@ void usage(void) {
 	printf("     -h | --help                    display this message and exit\n");
 }
 
-void die(const char* message) {
+static void
+die(const char* message) {
 	fprintf(stderr, "error: %s\n", message);
 	exit(1);
 }
 
-uint8_t get_cell(int32_t x, int32_t y) {
+static uint8_t
+get_cell(int32_t x, int32_t y) {
 	x = ((x % columns) + columns) % columns;
 	y = ((y % rows) + rows) % rows;
 	return cells[y * columns + x];
 }
 
-void toggle_cell(int32_t x, int32_t y) {
+static void
+toggle_cell(int32_t x, int32_t y) {
 	x = ((x % columns) + columns) % columns;
 	y = ((y % rows) + rows) % rows;
 	cells[y * columns + x] ^= 1;
 }
 
-void set_cell(int32_t x, int32_t y, uint8_t value) {
+static void
+set_cell(int32_t x, int32_t y, uint8_t value) {
 	x = ((x % columns) + columns) % columns;
 	y = ((y % rows) + rows) % rows;
 	cells[y * columns + x] = value;
 }
 
-void world_init(void) {
+static void
+world_init(void) {
 	cells = (uint8_t*)(malloc(sizeof(uint8_t)*rows*columns));
 	memset(cells, 0, sizeof(uint8_t)*rows*columns);
 }
 
-void world_advance(void) {
+static void
+world_advance(void) {
 	uint8_t *temp_cells = (uint8_t*)(malloc(sizeof(uint8_t)*columns*rows));
 	memcpy(temp_cells, cells, sizeof(uint8_t)*columns*rows);
 
@@ -124,7 +131,8 @@ void world_advance(void) {
 	free(temp_cells);
 }
 
-void world_save(void) {
+static void
+world_save(void) {
 	char filename[21];
 	time_t timer;
 	struct tm* tm_info;
@@ -155,7 +163,8 @@ void world_save(void) {
 	fclose(savefile);
 }
 
-void world_load(FILE* savefile) {
+static void
+world_load(FILE* savefile) {
 	if (savefile == NULL) {
 		die("file does not exist");
 	}
@@ -196,7 +205,8 @@ void world_load(FILE* savefile) {
 	}
 }
 
-void move(int32_t xoffset, int32_t yoffset) {
+static void
+move(int32_t xoffset, int32_t yoffset) {
 	uint8_t *temp_cells = (uint8_t*)(malloc(sizeof(uint8_t)*columns*rows));
 	memcpy(temp_cells, cells, sizeof(uint8_t)*columns*rows);
 
@@ -209,14 +219,16 @@ void move(int32_t xoffset, int32_t yoffset) {
 	free(temp_cells);
 }
 
-void loop() {
+static void
+loop() {
 	if (is_on_frame()) {
 		world_advance();
 		glutPostRedisplay();
 	}
 }
 
-void toggle_pause(void) {
+static void
+toggle_pause(void) {
 	paused = !paused;
 
 	if (!paused) {
@@ -228,13 +240,15 @@ void toggle_pause(void) {
 	glutIdleFunc(NULL);
 }
 
-void zoom(int8_t units) {
+static void
+zoom(int8_t units) {
 	cellsize += units;
 	if (cellsize < 4) cellsize = 4;
 	if (cellsize > 80) cellsize = 80;
 }
 
-void display(void) {
+static void
+display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(0.188, 0.639, 0.956);
 
@@ -272,7 +286,8 @@ void display(void) {
 	glutSwapBuffers();
 }
 
-void reshape(int w, int h) {
+static void
+reshape(int w, int h) {
 	width = (int32_t)(w); 
 	height = (int32_t)(h);
 
@@ -285,20 +300,23 @@ void reshape(int w, int h) {
 	glTranslatef(0, -h, 0);
 }
 
-void mouse(int button, int mstate, int x, int y) {
+static void
+mouse(int button, int mstate, int x, int y) {
 	if (paused && button == GLUT_LEFT_BUTTON && mstate == GLUT_UP) {
 		toggle_cell((x/cellsize), (y/cellsize));
 		glutPostRedisplay();
 	}
 }
 
-void mouse_motion(int x, int y) {
+static void
+mouse_motion(int x, int y) {
 	pointer_xoffset=x/cellsize;
 	pointer_yoffset=y/cellsize;
 	glutPostRedisplay();
 }
 
-void keyboard(unsigned char c, int x, int y) {	
+static void
+keyboard(unsigned char c, int x, int y) {	
 	c = tolower(c);
 	switch (c) {
 		case KEY_QUIT:
@@ -343,7 +361,8 @@ void keyboard(unsigned char c, int x, int y) {
 	}
 }
 
-void process_args(int argc, char** argv) {
+static void
+process_args(int argc, char** argv) {
 	for (int i = 1; i < argc; i++) {
 		if(MATCH_OPT(argv[i], "-G", "--no-grid")) {
 			showgrid = false;
@@ -363,7 +382,8 @@ void process_args(int argc, char** argv) {
 	}
 }
 
-int main(int argc, char** argv) {
+int
+main(int argc, char** argv) {
 	set_frame_rate(10);
 	world_init();	
 	process_args(argc, argv);
