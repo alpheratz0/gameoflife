@@ -1,20 +1,27 @@
+VERSION = 0.1.0
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 INCS = -I. -I/usr/include
 LIBS = -lglut -lGL
-CFLAGS = -std=c99 -pedantic -Wall -Os ${INCS}
+CFLAGS = -std=c99 -pedantic -Wall -Os ${INCS} -DVERSION=\"${VERSION}\"
 LDFLAGS = -s ${LIBS}
 CC = cc
 
-SRC = src/frame.c \
-	  src/gameoflife.c
+SRC = src/gameoflife.c \
+	  src/debug.c \
+	  src/window.c \
+	  src/board.c
 
 OBJ = ${SRC:.c=.o}
 
 all: gameoflife
 
-${OBJ}: src/frame.h \
-		src/keyconfig.h
+${OBJ}: src/keys.h \
+		src/debug.h \
+		src/window.h \
+		src/numdef.h \
+		src/buttons.h \
+		src/board.h
 
 gameoflife: ${OBJ}
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
