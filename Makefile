@@ -27,7 +27,7 @@ gameoflife: ${OBJ}
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	@rm -f gameoflife ${OBJ}
+	@rm -f gameoflife gameoflife-${VERSION}.tar.gz ${OBJ}
 
 install: all
 	@mkdir -p ${DESTDIR}${PREFIX}/bin
@@ -37,8 +37,15 @@ install: all
 	@cp -f man/gameoflife.6 ${DESTDIR}${MANPREFIX}/man6/gameoflife.6
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man6/gameoflife.6
 
+dist: clean
+	@mkdir -p gameoflife-${VERSION}
+	@cp -R LICENSE Makefile README man src gameoflife-${VERSION}
+	@tar -cf gameoflife-${VERSION}.tar gameoflife-${VERSION}
+	@gzip gameoflife-${VERSION}.tar
+	@rm -rf gameoflife-${VERSION}
+
 uninstall:
 	@rm -f ${DESTDIR}${PREFIX}/bin/gameoflife
 	@rm -f ${DESTDIR}${MANPREFIX}/man6/gameoflife.6
 
-.PHONY: all clean install uninstall
+.PHONY: all clean install uninstall dist
