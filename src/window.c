@@ -4,11 +4,11 @@
 
 static u32 width = 800, height = 600;
 static window_display_callback_t display_callback;
-static window_keydown_callback_t keydown_callback;
-static window_mousedown_callback_t mousedown_callback;
+static window_key_press_callback_t key_press_callback;
+static window_mouse_down_callback_t mouse_down_callback;
 
 static void
-reshape(i32 w, i32 h) {
+internal_reshape_callback(i32 w, i32 h) {
 	width = w; height = h;
 	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, w, h);
@@ -20,7 +20,7 @@ reshape(i32 w, i32 h) {
 }
 
 static void
-display(void) {
+internal_display_callback(void) {
 	if (display_callback) {
 		display_callback(width, height);
 		glutSwapBuffers();
@@ -28,16 +28,16 @@ display(void) {
 }
 
 static void
-keydown(u8 key, i32 x, i32 y) {
-	if (keydown_callback) {
-		keydown_callback(key);
+internal_key_press_callback(u8 key, i32 x, i32 y) {
+	if (key_press_callback) {
+		key_press_callback(key);
 	}
 }
 
 static void
-mousedown(i32 button, i32 mstate, i32 x, i32 y) {
-	if (mousedown_callback && mstate == GLUT_DOWN) {
-		mousedown_callback(x, y, button);
+internal_mouse_down_callback(i32 button, i32 mstate, i32 x, i32 y) {
+	if (mouse_down_callback && mstate == GLUT_DOWN) {
+		mouse_down_callback(x, y, button);
 	}
 }
 
@@ -54,10 +54,10 @@ window_init(const char *name) {
 	glClearColor(0, 0, 0, 1.0);
 	glShadeModel(GL_FLAT);
 
-	glutDisplayFunc(display);
-	glutReshapeFunc(reshape);
-	glutMouseFunc(mousedown);
-	glutKeyboardFunc(keydown);
+	glutDisplayFunc(internal_display_callback);
+	glutReshapeFunc(internal_reshape_callback);
+	glutMouseFunc(internal_mouse_down_callback);
+	glutKeyboardFunc(internal_key_press_callback);
 }
 
 extern void
@@ -71,13 +71,13 @@ window_set_display_callback(window_display_callback_t cb) {
 }
 
 extern void
-window_set_mousedown_callback(window_mousedown_callback_t cb) {
-	mousedown_callback = cb;
+window_set_mouse_down_callback(window_mouse_down_callback_t cb) {
+	mouse_down_callback = cb;
 }
 
 extern void
-window_set_keydown_callback(window_keydown_callback_t cb) {
-	keydown_callback = cb;
+window_set_key_press_callback(window_key_press_callback_t cb) {
+	key_press_callback = cb;
 }
 
 extern void

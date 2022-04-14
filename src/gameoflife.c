@@ -72,7 +72,7 @@ keybindings(void) {
 }
 
 static void
-display(i32 width, i32 height) {
+display_callback(i32 width, i32 height) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(0.188, 0.639, 0.956);
 
@@ -116,7 +116,7 @@ loop(void) {
 }
 
 static void
-keydown(u8 key) {
+key_press_callback(u8 key) {
 	switch(tolower(key)) {
 		case KEY_Q:
 			exit(0);
@@ -165,7 +165,7 @@ keydown(u8 key) {
 }
 
 static void
-mousedown(i32 x, i32 y, i32 button) {
+mouse_down_callback(i32 x, i32 y, i32 button) {
 	if (!running && button == BUTTON_LEFT) {
 		board_toggle(board, (x / cellsize), (y / cellsize));
 		window_force_redraw();
@@ -190,9 +190,9 @@ main(int argc, char** argv) {
 	}
 
 	window_init("conway's game of life");
-	window_set_display_callback(display);
-	window_set_keydown_callback(keydown);
-	window_set_mousedown_callback(mousedown);
+	window_set_display_callback(display_callback);
+	window_set_key_press_callback(key_press_callback);
+	window_set_mouse_down_callback(mouse_down_callback);
 	window_loop_start();
 
 	return 0;
