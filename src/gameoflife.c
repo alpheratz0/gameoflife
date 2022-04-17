@@ -23,12 +23,12 @@
 
 #include <GL/freeglut.h>
 
-#include "board.h"
-#include "buttons.h"
-#include "debug.h"
-#include "keys.h"
-#include "numdef.h"
-#include "window.h"
+#include "base/board.h"
+#include "gl/keys.h"
+#include "gl/buttons.h"
+#include "gl/window.h"
+#include "util/debug.h"
+#include "util/numdef.h"
 
 static board_t *board;
 static i32 cellsize = 20;

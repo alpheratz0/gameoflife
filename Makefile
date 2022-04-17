@@ -8,20 +8,20 @@ LDFLAGS = -s ${LIBS}
 CC = cc
 
 SRC = src/gameoflife.c \
-	  src/debug.c \
-	  src/window.c \
-	  src/board.c
+	  src/util/debug.c \
+	  src/gl/window.c \
+	  src/base/board.c
 
 OBJ = ${SRC:.c=.o}
 
 all: gameoflife
 
-${OBJ}: src/keys.h \
-		src/debug.h \
-		src/window.h \
-		src/numdef.h \
-		src/buttons.h \
-		src/board.h
+${OBJ}: src/gl/keys.h \
+		src/gl/buttons.h \
+		src/gl/window.h \
+		src/util/debug.h \
+		src/util/numdef.h \
+		src/base/board.h
 
 gameoflife: ${OBJ}
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}

@@ -1,5 +1,5 @@
-#ifndef __GAMEOFLIFE_BOARD_H__
-#define __GAMEOFLIFE_BOARD_H__
+#ifndef __GAMEOFLIFE_BASE_BOARD_H__
+#define __GAMEOFLIFE_BASE_BOARD_H__
 
 #include <stdbool.h>
 

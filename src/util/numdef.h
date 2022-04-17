@@ -1,5 +1,5 @@
-#ifndef __GAMEOFLIFE_NUMDEF_H__
-#define __GAMEOFLIFE_NUMDEF_H__
+#ifndef __GAMEOFLIFE_UTIL_NUMDEF_H__
+#define __GAMEOFLIFE_UTIL_NUMDEF_H__
 
 #include <stdint.h>
 

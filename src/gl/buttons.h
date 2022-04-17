@@ -1,0 +1,8 @@
+#ifndef __GAMEOFLIFE_GL_BUTTONS_H__
+#define __GAMEOFLIFE_GL_BUTTONS_H__
+
+#define BUTTON_LEFT 0
+#define BUTTON_MIDDLE 1
+#define BUTTON_RIGHT 2
+
+#endif

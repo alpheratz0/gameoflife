@@ -1,8 +1,0 @@
-#ifndef __GAMEOFLIFE_BUTTONS_H__
-#define __GAMEOFLIFE_BUTTONS_H__
-
-#define BUTTON_LEFT 0x0000
-#define BUTTON_MIDDLE 0x0001
-#define BUTTON_RIGHT 0x0002
-
-#endif

@@ -1,5 +1,5 @@
-#ifndef __GAMEOFLIFE_WINDOW_H__
-#define __GAMEOFLIFE_WINDOW_H__
+#ifndef __GAMEOFLIFE_GL_WINDOW_H__
+#define __GAMEOFLIFE_GL_WINDOW_H__
 
 #include "numdef.h"
 

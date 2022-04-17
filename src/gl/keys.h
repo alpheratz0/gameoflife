@@ -1,5 +1,5 @@
-#ifndef __GAMEOFLIFE_KEYS_H__
-#define __GAMEOFLIFE_KEYS_H__
+#ifndef __GAMEOFLIFE_GL_KEYS_H__
+#define __GAMEOFLIFE_GL_KEYS_H__
 
 #define KEY_SPACE 		' '
 #define KEY_N	 		'n'
