@@ -1,7 +1,7 @@
 #ifndef __GAMEOFLIFE_GL_WINDOW_H__
 #define __GAMEOFLIFE_GL_WINDOW_H__
 
-#include "numdef.h"
+#include "../util/numdef.h"
 
 typedef void (*window_display_callback_t)(i32 width, i32 height);
 typedef void (*window_mouse_down_callback_t)(i32 x, i32 y, i32 button);

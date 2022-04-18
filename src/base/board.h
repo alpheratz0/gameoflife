@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "numdef.h"
+#include "../util/numdef.h"
 
 typedef struct board board_t;
 

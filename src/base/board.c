@@ -5,8 +5,8 @@
 #include <string.h>
 #include <time.h>
 
-#include "debug.h"
-#include "numdef.h"
+#include "../util/debug.h"
+#include "../util/numdef.h"
 #include "board.h"
 
 extern bool

@@ -1,5 +1,6 @@
 #include <GL/freeglut.h>
 
+#include "../util/numdef.h"
 #include "window.h"
 
 static u32 width = 800, height = 600;
