@@ -117,7 +117,7 @@ loop(void) {
 
 static void
 key_press_callback(u8 key) {
-	switch(tolower(key)) {
+	switch (tolower(key)) {
 		case KEY_Q:
 			exit(0);
 			break;
