@@ -1,12 +1,16 @@
-gameoflife
-==========
-conway's game of life implemented in the c programming language using freeglut
+]|~ gameoflife ~|[
 
-build
-=====
-you will need freeglut headers to build this program
+Conway's game of life implemented in the C programming language
+using the freeglut library.
+
+]|~ build ~|[
+
+In order to build gameoflife you will need freeglut headers.
 $ make
 
-install
-=======
-$ sudo make install
+]|~ license ~|[
+
+This program is free software; you can redistribute it
+and/or modify it under the terms of the GNU General Public License
+version 2 as published by the Free Software Foundation.
+See LICENSE for more details.
