@@ -79,7 +79,6 @@ struct point {
 	int16_t y;
 };
 
-static int window;
 static int width;
 static int height;
 
@@ -189,7 +188,7 @@ create_window(void)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(width, height);
 	glutInitWindowPosition(0, 0);
-	window = glutCreateWindow("gameoflife");
+	glutCreateWindow("gameoflife");
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glClearColor(HEX_TO_GL_COLOR(DEAD_COLOR), 1.0);
 	glShadeModel(GL_FLAT);
