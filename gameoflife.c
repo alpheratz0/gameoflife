@@ -499,7 +499,7 @@ h_button_press(int button, int x, int y)
 }
 
 static void
-h_button_release(int button, int x, int y)
+h_button_release(int button, UNUSED int x, UNUSED int y)
 {
 	if (button == MOUSE_MIDDLE) {
 		dragging = 0;
