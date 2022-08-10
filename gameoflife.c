@@ -110,12 +110,12 @@ die(const char *err)
 static void
 dief(const char *fmt, ...)
 {
-	va_list list;
+	va_list args;
 
 	fputs("gameoflife: ", stderr);
-	va_start(list, fmt);
-	vfprintf(stderr, fmt, list);
-	va_end(list);
+	va_start(args, fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
 	fputc('\n', stderr);
 	exit(1);
 }
