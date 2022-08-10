@@ -108,15 +108,26 @@ die(const char *err)
 }
 
 static void
-dief(const char *err, ...)
+dief(const char *fmt, ...)
 {
 	va_list list;
+
 	fputs("gameoflife: ", stderr);
-	va_start(list, err);
-	vfprintf(stderr, err, list);
+	va_start(list, fmt);
+	vfprintf(stderr, fmt, list);
 	va_end(list);
 	fputc('\n', stderr);
 	exit(1);
+}
+
+static const char *
+enotnull(const char *str, const char *name)
+{
+	if (NULL == str) {
+		dief("%s cannot be null", name);
+	}
+
+	return str;
 }
 
 static void *
@@ -395,26 +406,10 @@ render_scene(void)
 	glutBitmapString(GLUT_BITMAP_8_BY_13, (uint8_t *)(text));
 }
 
-static int
-match_opt(const char *in, const char *sh, const char *lo)
-{
-	return (strcmp(in, sh) == 0) || (strcmp(in, lo) == 0);
-}
-
-static inline void
-print_opt(const char *sh, const char *lo, const char *desc)
-{
-	printf("%7s | %-25s %s\n", sh, lo, desc);
-}
-
 static void
 usage(void)
 {
-	puts("Usage: gameoflife [ -hv ] [ -l FILE ]");
-	puts("Options are:");
-	print_opt("-h", "--help", "display this message and exit");
-	print_opt("-v", "--version", "display the program version");
-	print_opt("-l", "--load", "load saved board");
+	puts("usage: gameoflife [-hv] [-l file]");
 	exit(0);
 }
 
@@ -569,9 +564,9 @@ main(int argc, char **argv)
 	const char *loadpath = NULL;
 
 	if (++argv, --argc > 0) {
-		if (match_opt(*argv, "-l", "--load") && --argc > 0) loadpath = *++argv;
-		else if (match_opt(*argv, "-h", "--help")) usage();
-		else if (match_opt(*argv, "-v", "--version")) version();
+		if (!strcmp(*argv, "-l")) --argc, loadpath = enotnull(*++argv, "path");
+		else if (!strcmp(*argv, "-h")) usage();
+		else if (!strcmp(*argv, "-v")) version();
 		else if (**argv == '-') dief("invalid option %s", *argv);
 		else dief("unexpected argument: %s", *argv);
 	}
