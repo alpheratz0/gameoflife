@@ -1,15 +1,7 @@
 .POSIX:
 .PHONY: all clean install uninstall dist
 
-VERSION = 0.1.3
-
-CC      = cc
-CFLAGS  = -std=c99 -pedantic -Wall -Wextra -Os -DVERSION=\"$(VERSION)\"
-LDLIBS  = -lglut -lGL -lm
-LDFLAGS = -s
-
-PREFIX    = /usr/local
-MANPREFIX = $(PREFIX)/share/man
+include config.mk
 
 all: gameoflife
 
@@ -29,7 +21,7 @@ install: all
 
 dist: clean
 	mkdir -p gameoflife-$(VERSION)
-	cp -R COPYING Makefile README gameoflife.6 gameoflife.c gameoflife-$(VERSION)
+	cp -R COPYING config.mk Makefile README gameoflife.6 gameoflife.c gameoflife-$(VERSION)
 	tar -cf gameoflife-$(VERSION).tar gameoflife-$(VERSION)
 	gzip gameoflife-$(VERSION).tar
 	rm -rf gameoflife-$(VERSION)
