@@ -29,7 +29,7 @@ install: all
 
 dist: clean
 	mkdir -p gameoflife-$(VERSION)
-	cp -R LICENSE Makefile README gameoflife.6 gameoflife.c gameoflife-$(VERSION)
+	cp -R COPYING Makefile README gameoflife.6 gameoflife.c gameoflife-$(VERSION)
 	tar -cf gameoflife-$(VERSION).tar gameoflife-$(VERSION)
 	gzip gameoflife-$(VERSION).tar
 	rm -rf gameoflife-$(VERSION)
