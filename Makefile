@@ -3,7 +3,10 @@
 
 include config.mk
 
-all: gameoflife
+all: config.h gameoflife
+
+config.h: config.def.h
+	cp config.def.h config.h
 
 gameoflife: gameoflife.o
 	$(CC) $(LDFLAGS) -o gameoflife gameoflife.o $(LDLIBS)
@@ -21,7 +24,8 @@ install: all
 
 dist: clean
 	mkdir -p gameoflife-$(VERSION)
-	cp -R COPYING config.mk Makefile README gameoflife.6 gameoflife.c gameoflife-$(VERSION)
+	cp -R COPYING config.mk Makefile README gameoflife.6 config.def.h \
+		gameoflife.c gameoflife-$(VERSION)
 	tar -cf gameoflife-$(VERSION).tar gameoflife-$(VERSION)
 	gzip gameoflife-$(VERSION).tar
 	rm -rf gameoflife-$(VERSION)
