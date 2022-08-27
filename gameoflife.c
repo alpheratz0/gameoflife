@@ -111,10 +111,8 @@ dief(const char *fmt, ...)
 static const char *
 enotnull(const char *str, const char *name)
 {
-	if (NULL == str) {
+	if (NULL == str)
 		dief("%s cannot be null", name);
-	}
-
 	return str;
 }
 
@@ -123,9 +121,8 @@ xcalloc(size_t n, size_t size)
 {
 	void *p;
 
-	if (NULL == (p = calloc(n, size))) {
+	if (NULL == (p = calloc(n, size)))
 		die("error while calling calloc, no memory available");
-	}
 
 	return p;
 }
@@ -152,13 +149,11 @@ blockwait(int nanoseconds)
 	clock_gettime(CLOCK_MONOTONIC, &now_ts);
 
 	/* check if we already reached the end */
-	if (now_ts.tv_sec > end_ts.tv_sec) {
+	if (now_ts.tv_sec > end_ts.tv_sec)
 		return;
-	}
 
-	if (now_ts.tv_sec == end_ts.tv_sec && now_ts.tv_nsec >= end_ts.tv_nsec) {
+	if (now_ts.tv_sec == end_ts.tv_sec && now_ts.tv_nsec >= end_ts.tv_nsec)
 		return;
-	}
 
 	delta_ts.tv_sec = end_ts.tv_sec - now_ts.tv_sec;
 	delta_ts.tv_nsec = end_ts.tv_nsec - now_ts.tv_nsec;
@@ -189,7 +184,7 @@ create_window(void)
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("gameoflife");
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
-	glClearColor(HEX_TO_GL_COLOR(DEAD_COLOR), 1.0);
+	glClearColor(HEX_TO_GL_COLOR(dead_color), 1.0);
 	glShadeModel(GL_FLAT);
 }
 
@@ -201,7 +196,7 @@ create_board(int32_t c, int32_t r)
 
 	columns = c;
 	rows = r;
-	cellsize = INITIAL_CELLSIZE;
+	cellsize = initial_cellsize;
 }
 
 static uint8_t
@@ -236,11 +231,9 @@ count_neighbours_alive(int x, int y)
 
 	count = -get_cell(x, y);
 
-	for (dx = -1; dx < 2; ++dx) {
-		for (dy = -1; dy < 2; ++dy) {
+	for (dx = -1; dx < 2; ++dx)
+		for (dy = -1; dy < 2; ++dy)
 			count += get_cell(x + dx, y + dy) ? 1 : 0;
-		}
-	}
 
 	return count;
 }
@@ -277,19 +270,15 @@ save_board(void)
 	now = localtime((const time_t[]) { time(NULL) });
 	strftime(filename, sizeof(filename), "%Y%m%d%H%M%S.xg", now);
 
-	if (NULL == (fp = fopen(filename, "w"))) {
+	if (NULL == (fp = fopen(filename, "w")))
 		dief("failed to open file %s: %s", filename, strerror(errno));
-	}
 
 	fprintf(fp, "%dx%d\n", columns, rows);
 
-	for (x = 0; x < columns; ++x) {
-		for (y = 0; y < rows; ++y) {
-			if (get_cell(x, y)) {
+	for (x = 0; x < columns; ++x)
+		for (y = 0; y < rows; ++y)
+			if (get_cell(x, y))
 				fprintf(fp, "%d,%d\n", x, y);
-			}
-		}
-	}
 
 	fclose(fp);
 }
@@ -300,22 +289,20 @@ load_board(const char *path)
 	int x, y;
 	FILE *fp;
 
-	if (NULL == (fp = fopen(path, "r"))) {
+	if (NULL == (fp = fopen(path, "r")))
 		dief("failed to open file %s: %s", path, strerror(errno));
-	}
 
 	if (fscanf(fp, "%dx%d\n", &columns, &rows) != 2) {
-		columns = DEFAULT_COLUMNS;
-		rows = DEFAULT_ROWS;
+		columns = default_columns;
+		rows = default_rows;
 
 		rewind(fp);
 	}
 
 	create_board(columns, rows);
 
-	while (fscanf(fp, "%d,%d\n", &x, &y) == 2) {
+	while (fscanf(fp, "%d,%d\n", &x, &y) == 2)
 		set_cell(x, y, 1);
-	}
 
 	fclose(fp);
 }
@@ -351,7 +338,7 @@ render_scene(void)
 	celloffy = offset.y % cellsize;
 
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(HEX_TO_GL_COLOR(ALIVE_COLOR));
+	glColor3f(HEX_TO_GL_COLOR(alive_color));
 
 #define DRAW_RECT(x,y,w,h) glRectf(x,y,x+w,y+h)
 
@@ -364,7 +351,7 @@ render_scene(void)
 		}
 	}
 
-	glColor3f(HEX_TO_GL_COLOR(BORDER_COLOR));
+	glColor3f(HEX_TO_GL_COLOR(border_color));
 
 	for (i = -1; i < vcolumns + 1; ++i) {
 		glBegin(GL_LINES);
@@ -380,16 +367,15 @@ render_scene(void)
 		glEnd();
 	}
 
-	glColor3f(HEX_TO_GL_COLOR(BAR_COLOR));
+	glColor3f(HEX_TO_GL_COLOR(bar_color));
 	DRAW_RECT(0, height - INFO_BAR_HEIGHT, width, INFO_BAR_HEIGHT);
 
 #undef DRAW_RECT
 
-	if (!running) {
+	if (!running)
 		snprintf(text, sizeof(text), "* PAUSED (%hd, %hd)", hovered.x, hovered.y);
-	}
 
-	glColor3f(HEX_TO_GL_COLOR(TEXT_COLOR));
+	glColor3f(HEX_TO_GL_COLOR(text_color));
 	glRasterPos2f(INFO_BAR_HEIGHT / 2, height - (INFO_BAR_HEIGHT - FONT_HEIGHT) / 2);
 	glutBitmapString(GLUT_BITMAP_8_BY_13, (uint8_t *)(text));
 }
@@ -432,9 +418,8 @@ h_key_press(unsigned char key, UNUSED int x, UNUSED int y)
 			}
 			break;
 		case KEY_CTRL_S:
-			if (!running) {
+			if (!running)
 				save_board();
-			}
 			break;
 	}
 }
@@ -444,9 +429,8 @@ h_button_press(int button, int x, int y)
 {
 	int16_t zoom;
 
-	if (running) {
+	if (running)
 		return;
-	}
 
 	zoom = 0;
 
@@ -461,14 +445,12 @@ h_button_press(int button, int x, int y)
 			mousepos.y = y;
 			break;
 		case MOUSE_WHEEL_UP:
-			if (cellsize < MAX_CELLSIZE) {
+			if (cellsize < max_cellsize)
 				zoom = 1;
-			}
 			break;
 		case MOUSE_WHEEL_DOWN:
-			if (cellsize > MIN_CELLSIZE) {
+			if (cellsize > min_cellsize)
 				zoom = -1;
-			}
 			break;
 	}
 
@@ -483,9 +465,8 @@ h_button_press(int button, int x, int y)
 static void
 h_button_release(int button, UNUSED int x, UNUSED int y)
 {
-	if (button == MOUSE_MIDDLE) {
+	if (button == MOUSE_MIDDLE)
 		dragging = 0;
-	}
 }
 
 static void
@@ -501,34 +482,34 @@ h_passive_motion(int x, int y)
 	hovered.x = floor(((float)(x - offset.x)) / cellsize);
 	hovered.y = floor(((float)(y - offset.y)) / cellsize);
 
-	if (!running) {
+	if (!running)
 		glutPostRedisplay();
-	}
 }
 
 static void
 h_motion(int x, int y)
 {
-	if (dragging) {
-		offset.x += x - mousepos.x;
-		offset.y += y - mousepos.y;
+	if (!dragging)
+		return;
 
-		mousepos.x = x;
-		mousepos.y = y;
+	offset.x += x - mousepos.x;
+	offset.y += y - mousepos.y;
+	mousepos.x = x;
+	mousepos.y = y;
 
-		glutPostRedisplay();
-	}
+	glutPostRedisplay();
 }
 
 static void
 h_loop(void)
 {
-	if (running) {
-		advance_to_next_generation();
-		glutPostRedisplay();
-		blockwait(NANOSECONDS_PER_SECOND / GENERATIONS_PER_SECOND);
-		blockstart();
-	}
+	if (!running)
+		return;
+
+	advance_to_next_generation();
+	glutPostRedisplay();
+	blockwait(NANOSECONDS_PER_SECOND / generations_per_second);
+	blockstart();
 }
 
 static void
@@ -559,7 +540,7 @@ main(int argc, char **argv)
 		else dief("unexpected argument: %s", *argv);
 	}
 
-	if (NULL == loadpath) create_board(DEFAULT_COLUMNS, DEFAULT_ROWS);
+	if (NULL == loadpath) create_board(default_columns, default_rows);
 	else load_board(loadpath);
 
 	create_window();
