@@ -24,10 +24,10 @@
 //////////////////////////////////// THEME
 //////////////////////////////////////////
 const uint32_t dead_color   =    0x000000;
-const uint32_t alive_color  =    0xeb348c;
+const uint32_t alive_color  =    0x30a3f4;
 const uint32_t border_color =    0x191919;
-const uint32_t bar_color    =    0xeb348c;
-const uint32_t text_color   =    0xffffff;
+const uint32_t bar_color    =    0xf0f72a;
+const uint32_t text_color   =    0x000000;
 //////////////////////////////////////////
 
 //////////////////////////////////////////
