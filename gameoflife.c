@@ -42,32 +42,37 @@
 
 #include "config.h"
 
-#define UNUSED                             __attribute__((unused))
+#define UNUSED __attribute__((unused))
 
-#define NANOSECONDS_PER_SECOND             (1000*1000*1000)
-#define FONT_HEIGHT                        (8)
-#define INFO_BAR_HEIGHT                    (20)
+#define NANOSECONDS_PER_SECOND (1000*1000*1000)
+#define FONT_HEIGHT 8
+#define INFO_BAR_HEIGHT 20
 
-#define MOUSE_LEFT                         (0)
-#define MOUSE_MIDDLE                       (1)
-#define MOUSE_RIGHT                        (2)
-#define MOUSE_WHEEL_UP                     (3)
-#define MOUSE_WHEEL_DOWN                   (4)
+#define HEX_TO_GL_COLOR(hex) \
+	((float)(hex >> 16)) / 0xff, \
+	((float)((hex >> 8) & 0xff)) / 0xff, \
+	((float)(hex & 0xff)) / 0xff
 
-#define KEY_SPACE                          (32)
-#define KEY_CTRL_S                         (19)
-#define KEY_N                              (110)
+enum {
+	MOUSE_LEFT = 0,
+	MOUSE_MIDDLE = 1,
+	MOUSE_RIGHT = 2,
+	MOUSE_WHEEL_UP = 3,
+	MOUSE_WHEEL_DOWN = 4
+};
 
-#define HEX_TO_GL_COLOR(hex) ((float)(hex >> 16)) / 0xff, \
-                             ((float)((hex >> 8) & 0xff)) / 0xff, \
-                             ((float)(hex & 0xff)) / 0xff
-
+enum {
+	KEY_CTRL_S = 19,
+	KEY_SPACE = 32,
+	KEY_N = 110
+};
 
 struct point {
 	int16_t x;
 	int16_t y;
 };
 
+/* window */
 static int width;
 static int height;
 
@@ -395,22 +400,22 @@ static void
 h_key_press(unsigned char key, UNUSED int x, UNUSED int y)
 {
 	switch (key) {
-		case KEY_SPACE:
-			if (!dragging) {
-				running = !running;
-				glutPostRedisplay();
-			}
-			break;
-		case KEY_N:
-			if (!running) {
-				advance_to_next_generation();
-				glutPostRedisplay();
-			}
-			break;
-		case KEY_CTRL_S:
-			if (!running)
-				save_board();
-			break;
+	case KEY_SPACE:
+		if (!dragging) {
+			running = !running;
+			glutPostRedisplay();
+		}
+		break;
+	case KEY_N:
+		if (!running) {
+			advance_to_next_generation();
+			glutPostRedisplay();
+		}
+		break;
+	case KEY_CTRL_S:
+		if (!running)
+			save_board();
+		break;
 	}
 }
 
@@ -425,23 +430,23 @@ h_button_press(int button, int x, int y)
 	zoom = 0;
 
 	switch (button) {
-		case MOUSE_LEFT:
-			toggle_cell(hovered.x, hovered.y);
-			glutPostRedisplay();
-			break;
-		case MOUSE_MIDDLE:
-			dragging = 1;
-			mousepos.x = x;
-			mousepos.y = y;
-			break;
-		case MOUSE_WHEEL_UP:
-			if (cellsize < max_cellsize)
-				zoom = 1;
-			break;
-		case MOUSE_WHEEL_DOWN:
-			if (cellsize > min_cellsize)
-				zoom = -1;
-			break;
+	case MOUSE_LEFT:
+		toggle_cell(hovered.x, hovered.y);
+		glutPostRedisplay();
+		break;
+	case MOUSE_MIDDLE:
+		dragging = 1;
+		mousepos.x = x;
+		mousepos.y = y;
+		break;
+	case MOUSE_WHEEL_UP:
+		if (cellsize < max_cellsize)
+			zoom = 1;
+		break;
+	case MOUSE_WHEEL_DOWN:
+		if (cellsize > min_cellsize)
+			zoom = -1;
+		break;
 	}
 
 	if (zoom) {
@@ -527,9 +532,9 @@ main(int argc, char **argv)
 	while (++argv, --argc > 0) {
 		if ((*argv)[0] == '-' && (*argv)[1] != '\0' && (*argv)[2] == '\0') {
 			switch ((*argv)[1]) {
-				case 'h': usage(); break;
-				case 'v': version(); break;
-				default: die("invalid option %s", *argv); break;
+			case 'h': usage(); break;
+			case 'v': version(); break;
+			default: die("invalid option %s", *argv); break;
 			}
 		} else {
 			if (loadpath != NULL)
