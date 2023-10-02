@@ -6,7 +6,7 @@ include config.mk
 all: gameoflife
 
 gameoflife: gameoflife.o
-	$(CC) $(LDFLAGS) -o gameoflife gameoflife.o $(LDLIBS)
+	$(CC) $(LDFLAGS) -o gameoflife gameoflife.o
 
 clean:
 	rm -f gameoflife gameoflife.o gameoflife-$(VERSION).tar.gz
